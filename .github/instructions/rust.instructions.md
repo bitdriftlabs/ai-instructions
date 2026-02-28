@@ -31,7 +31,8 @@ applyTo: '**/*.rs'
   it explaining it. The comment length can increase with the complexity of what is being documented.
   Any very long functions should have minimal comments above logical sections with a brief summary
   of that section
-- Unless there is a good reason, always use imports for structs, enums, etc. to avoid verbose code.
+- ALWAYS use imports for structs, enums, etc. to avoid verbose code. NEVER use fully qualified names
+  like `crate::module::Struct` in the code without importing `Struct` at the top of the file.
 - **NEVER** use `.context()` on anyhow errors unless explicitly requested. It makes the code more
   verbose and is not the style used in this codebase. Use `anyhow::anyhow!()` with `ok_or_else()`
   instead of `.context()` when adding error messages to Option types.
@@ -39,6 +40,14 @@ applyTo: '**/*.rs'
   the parameter and fix callers.
 - When setting expectations on `Arc`-wrapped mocks, use `bd_test_helpers::make_mut` to get a mutable
   reference for configuring the mock.
+- Structs/enums and their implementation should be delimited with a multi-line comment header like
+  the following:
+
+```rust
+//
+// StructName
+//
+```
 
 ## Documentation Guidelines
 - Avoid redundant documentation for the sake of convention. For example:
