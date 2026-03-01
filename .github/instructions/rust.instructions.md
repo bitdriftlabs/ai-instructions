@@ -40,6 +40,16 @@ applyTo: '**/*.rs'
   the parameter and fix callers.
 - When setting expectations on `Arc`-wrapped mocks, use `bd_test_helpers::make_mut` to get a mutable
   reference for configuring the mock.
+- Code that is only used by tests should either be placed in the test file, or if it needs to be
+  used by multiple test files, it should be placed in a `test` module in the crate. If the code
+  is only used within the crate, the module can be #[cfg(test)], but if it needs to be used by other
+  crates, it should not be #[cfg(test)], and can be public.
+- Logical sections of code > than approximately 250 lines should go in its own module. Do not write
+  gigantic monolithic modules.
+- DO add logging to written code using the log crate. High frequency code should use trace/debug
+  level. Startup/shutdown and important low frequency events should use the info level. For
+  handled errors that can occur at high frequency use the warn_every macro from bd_log to rate limit
+  the logging.
 - Structs/enums and their implementation should be delimited with a multi-line comment header like
   the following:
 
