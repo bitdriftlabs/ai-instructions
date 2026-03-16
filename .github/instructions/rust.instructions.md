@@ -13,8 +13,12 @@ applyTo: '**/*.rs'
 - Test (specific crate): `cargo nextest run -p crate-name`
 - Coverage: `cargo tarpaulin --engine llvm -o html`
 - When verifying, just run cargo commands directly. Do not prefix with SKIP_PROTO_GEN=1.
+- ALWAYS use `cargo nextest` for running tests instead of `cargo test` for faster iteration and
+  better failure reporting. Only use `cargo test` if you need to debug with a debugger or profiler
+  that doesn't work with nextest.
 
 ## Code Style Guidelines
+- In general do NOT duplicate code. Practice DRY and favor moving shared code to a common helper.
 - Use 2-space indentation (no tabs)
 - Max line width: 100 characters
 - Error handling: Use `anyhow` for general errors, `thiserror` for custom error types
