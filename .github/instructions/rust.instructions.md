@@ -106,3 +106,7 @@ CRITICAL: ONLY follow the below guidelines if the `get_errors` tool is available
 * **CRITICAL**: At the end of ANY task that modifies code, ALWAYS verify with the `get_errors` tool
   to check IDE errors across the ENTIRE workspace (do not pass file paths). If there are errors
   fix the entire project.
+
+## SQL Testing Guidelines
+* It is *CRITICAL* to write integration tests that validate SQL via the associated database (Clickhouse/Postgres/sqlite).
+  Testing SQL queries/fragments as text can have its place but *DOES NOT* replace integration test coverage.
