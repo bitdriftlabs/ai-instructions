@@ -1,8 +1,3 @@
----
-name: 'Rust Standards'
-description: 'Coding conventions for Rust files'
-applyTo: '**/*.rs'
----
 # Rust coding standards
 
 ## Build/Lint/Test Commands

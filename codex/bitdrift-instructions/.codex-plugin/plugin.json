@@ -1,0 +1,21 @@
+{
+  "name": "bitdrift-instructions",
+  "version": "0.1.0",
+  "description": "Bitdrift coding instructions for Codex.",
+  "author": {
+    "name": "bitdrift"
+  },
+  "repository": "https://github.com/bitdriftlabs/ai-instructions",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Bitdrift Instructions",
+    "shortDescription": "Bitdrift coding standards for Codex.",
+    "longDescription": "Packages bitdrift's shared AI coding instructions as Codex skills.",
+    "developerName": "bitdrift",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": "Use Bitdrift Instructions for this task."
+  }
+}

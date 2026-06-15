@@ -1,0 +1,20 @@
+{
+  "name": "bitdrift",
+  "interface": {
+    "displayName": "bitdrift"
+  },
+  "plugins": [
+    {
+      "name": "bitdrift-instructions",
+      "source": {
+        "source": "local",
+        "path": "./codex/bitdrift-instructions"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
