@@ -1,7 +1,8 @@
 ---
-name: 'Rust Standards'
-description: 'Coding conventions for Rust files'
-applyTo: '**/*.rs'
+paths:
+  - "**/*.rs"
+  - "**/Cargo.toml"
+  - "**/Cargo.lock"
 ---
 # Rust coding standards
 
