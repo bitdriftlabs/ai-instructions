@@ -67,6 +67,10 @@ paths:
 //
 ```
 
+## Synchronization guidelines
+- Do NOT use tokio::sync::Mutex unless there is no way to avoid it and its use must be justified by
+  comments. It is prone to deadlocks. Use parking_lot for Mutex and RwLock.
+
 ## Documentation Guidelines
 
 - Avoid redundant documentation for the sake of convention. For example:
