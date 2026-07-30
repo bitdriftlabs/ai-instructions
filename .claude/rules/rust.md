@@ -58,6 +58,10 @@ paths:
   level. Startup/shutdown and important low frequency events should use the info level. For handled
   errors that can occur at high frequency use the `warn_every` macro from `bd_log` to rate limit the
   logging.
+- When debugging unclear asynchronous, concurrent, or lifecycle behavior, add narrow trace/debug
+  logs for the relevant state transitions and blocking predicates before making further speculative
+  changes. Use the resulting trace to choose the next hypothesis, and retain logs that provide
+  durable operational observability after the immediate issue is fixed.
 - Structs/enums and their implementation should be delimited with a multi-line comment header like
   the following:
 
