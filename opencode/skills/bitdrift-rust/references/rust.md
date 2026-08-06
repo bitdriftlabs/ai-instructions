@@ -19,7 +19,9 @@
 - In general do NOT duplicate code. Practice DRY and favor moving shared code to a common helper.
 - Use 2-space indentation (no tabs)
 - Max line width: 100 characters
-- Error handling: Use `anyhow` for general errors, `thiserror` for custom error types
+- Error handling: Use `anyhow` for general errors, `thiserror` for custom error types. In a
+  `Result`-returning function, prefer `anyhow::bail!("...")` for an immediate validation or
+  guard-clause error instead of `return Err(anyhow::anyhow!("..."))`.
 - Imports: Group imports with `One` style, module granularity, and `HorizontalVertical` layout
 - Always put imports at the top of the file.
 - Use workspace dependencies from `Cargo.toml` where available
