@@ -8,5 +8,9 @@ Follow the Rust standards in `references/rust.md`.
 Before editing or reviewing Rust:
 
 1. Read `references/rust.md`.
-2. Apply those conventions unless closer repository instructions override them.
-3. Prefer focused verification on modified crates, then broaden only when the change risk requires it.
+2. Identify the checkout root that owns formatter, build, lint, or test commands, then resolve its
+	execution profile as described in `references/rust.md`.
+3. Load the matching execution-profile skill when it is available. Otherwise, follow the commands
+	in the command-owning checkout's instructions.
+4. Apply the Rust core conventions and the selected profile, then prefer focused verification on
+	modified crates before broadening for change risk.

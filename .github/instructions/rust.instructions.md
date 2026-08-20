@@ -3,21 +3,20 @@ name: 'Rust Standards'
 description: 'Coding conventions for Rust files'
 applyTo: '**/*.rs'
 ---
-# Rust coding standards
+# Rust Core Standards
 
-## Build/Lint/Test Commands
+## Execution Profile Resolution
 
-- Build: `cargo build --workspace`
-- Lint: `cargo clippy --workspace --bins --examples --tests -- --no-deps`
-- Format: `cargo +nightly fmt`
-- Test (all): `cargo nextest run`
-- Test (single): `cargo nextest run test_name`
-- Test (specific crate): `cargo nextest run -p crate-name`
-- Coverage: `cargo tarpaulin --engine llvm -o html`
-- When verifying, just run cargo commands directly. Do not prefix with `SKIP_PROTO_GEN=1`.
-- ALWAYS use `cargo nextest` for running tests instead of `cargo test` for faster iteration and
-  better failure reporting. Only use `cargo test` if you need to debug with a debugger or profiler
-  that doesn't work with nextest.
+This document intentionally does not prescribe concrete formatter, build, lint, or test commands.
+Resolve the execution profile before running those commands:
+
+1. Identify the checkout root that owns the command. An enclosing monorepo root owns commands for
+  its nested repositories; otherwise, the repository root owns its own commands.
+2. If that root's `AGENTS.md` declares `Execution profile: <name>`, load and apply that profile.
+3. If the command-owning root declares no profile, use the Cargo Workspace Execution Profile.
+
+Child repository instructions may add repository-specific constraints, but do not select an
+execution profile that overrides their command-owning checkout root.
 
 ## Code Style Guidelines
 
