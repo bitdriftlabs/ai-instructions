@@ -18,7 +18,9 @@ def markdown_with_trailing_newline(path: str) -> str:
     return f"{content}\n"
 
 
-rust = markdown_with_trailing_newline("instructions/rust.md")
+rust_core = markdown_with_trailing_newline("instructions/rust.md")
+cargo_workspace = markdown_with_trailing_newline("instructions/cargo-workspace.md")
+bazel_monorepo = markdown_with_trailing_newline("instructions/bazel-monorepo.md")
 
 write(
     ".github/instructions/rust.instructions.md",
@@ -27,7 +29,7 @@ name: 'Rust Standards'
 description: 'Coding conventions for Rust files'
 applyTo: '**/*.rs'
 ---
-{rust}""",
+{rust_core}""",
 )
 
 write(
@@ -38,8 +40,24 @@ paths:
   - "**/Cargo.toml"
   - "**/Cargo.lock"
 ---
-{rust}""",
+{rust_core}""",
 )
 
-write("codex/bitdrift-instructions/skills/rust/references/rust.md", rust)
-write("opencode/skills/bitdrift-rust/references/rust.md", rust)
+write("codex/bitdrift-instructions/skills/rust/references/rust.md", rust_core)
+write("opencode/skills/bitdrift-rust/references/rust.md", rust_core)
+
+for adapter_path, profile in (
+    (".github/skills/cargo-workspace/references/cargo-workspace.md", cargo_workspace),
+    (".github/skills/bazel-monorepo/references/bazel-monorepo.md", bazel_monorepo),
+    (
+        "codex/bitdrift-instructions/skills/cargo-workspace/references/cargo-workspace.md",
+        cargo_workspace,
+    ),
+    (
+        "codex/bitdrift-instructions/skills/bazel-monorepo/references/bazel-monorepo.md",
+        bazel_monorepo,
+    ),
+    ("opencode/skills/cargo-workspace/references/cargo-workspace.md", cargo_workspace),
+    ("opencode/skills/bazel-monorepo/references/bazel-monorepo.md", bazel_monorepo),
+):
+    write(adapter_path, profile)

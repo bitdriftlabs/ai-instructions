@@ -24,7 +24,7 @@ Edit the canonical file first, then regenerate adapters:
 python3 scripts/sync-adapters.py
 ```
 
-For Rust, edit `instructions/rust.md`. The sync script updates:
+For portable Rust conventions, edit `instructions/rust.md`. The sync script updates:
 
 - `.github/instructions/rust.instructions.md`
 - `.claude/rules/rust.md`
@@ -33,6 +33,26 @@ For Rust, edit `instructions/rust.md`. The sync script updates:
 
 The harness wrapper files such as `SKILL.md`, plugin manifests, and marketplace metadata are
 checked in directly and should stay thin.
+
+## Rust Execution Profiles
+
+`instructions/rust.md` contains portable language conventions only. It deliberately does not
+select formatter, build, lint, or test commands. Resolve commands from the checkout root that owns
+the command: an enclosing monorepo root controls its nested repositories, while a standalone
+repository controls itself. If that root's `AGENTS.md` declares a profile, it is the sole authority:
+
+- `Execution profile: cargo-workspace`: use the command set in
+	`instructions/cargo-workspace.md`.
+- `Execution profile: bazel-monorepo`: use the command set in
+	`instructions/bazel-monorepo.md`.
+
+When the command-owning root declares no profile, use `cargo-workspace`. Child repository
+instructions may add workflow details such as exact Bazel labels, generation commands, or
+submodule routing, but must not override their command-owning root's profile.
+
+The profiles are packaged as on-demand skills for Copilot Chat, Codex, and OpenCode. Install both
+when using shared personal skills; their descriptions require a matching `AGENTS.md` declaration,
+so only the selected profile is loaded.
 
 ## Codex
 
@@ -57,8 +77,25 @@ codex plugin marketplace add bitdriftlabs/ai-instructions --ref main
 Use repository `AGENTS.md` files for repo-specific overrides and routing. For example:
 
 ```md
-- For Rust work, use the `bitdrift-rust` skill.
+Execution profile: `bazel-monorepo`.
+
+For Rust work, use `bitdrift-rust`, then load `bazel-monorepo` for command selection.
 ```
+
+## Copilot Chat
+
+Copilot Chat discovers project skills in `.github/skills/`. To make the shared Rust and execution
+profile skills available across repositories, symlink them into the user skill directory:
+
+```sh
+mkdir -p ~/.copilot/skills
+ln -s ~/src/ai-instructions/.github/skills/cargo-workspace ~/.copilot/skills/cargo-workspace
+ln -s ~/src/ai-instructions/.github/skills/bazel-monorepo ~/.copilot/skills/bazel-monorepo
+```
+
+Keep the portable Rust instruction under `.github/instructions/` and declare an execution profile
+only in a command-owning checkout root's `AGENTS.md`. Do not add either profile as an `applyTo`
+instruction.
 
 ## Claude Code
 
@@ -104,5 +141,7 @@ ln -s ~/src/ai-instructions/opencode/skills/bitdrift-rust /path/to/repo/.opencod
 Use repository `AGENTS.md` files for repo-specific overrides and routing. For example:
 
 ```md
-- For Rust work, use the `bitdrift-rust` skill.
+Execution profile: `cargo-workspace`.
+
+For Rust work, use `bitdrift-rust`, then load `cargo-workspace` for command selection.
 ```
