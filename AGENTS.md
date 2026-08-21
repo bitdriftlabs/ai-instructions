@@ -21,6 +21,7 @@ harness.
 2. Run `python3 scripts/sync-adapters.py`.
 3. Review the regenerated adapter files and keep checked-in wrapper text aligned with the same
    parity model.
+4. Bump the plugin version so plugin-based harnesses can pick up the change.
 
 ## Adding a new harness
 
