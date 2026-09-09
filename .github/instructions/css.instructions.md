@@ -27,8 +27,18 @@ applyTo: '**/*.css'
 - Keep one-off layout values local. Do not introduce a token merely to avoid a single literal.
 - Use custom-property overrides for themes and component variants rather than duplicating complete
   rule sets or hard-coding alternate-theme values.
-- Use `rem` for font sizing and user-scalable dimensions where appropriate. Reserve fixed units for
-  deliberate physical details such as borders, and match local conventions for all other units.
+- Use `rem` for font sizes, spacing, and other values that should respect the user's root text-size
+  preference. Use unitless values for `line-height` so text scales with its font size.
+- Use `em` only when a value must scale with the current component's font size, such as an
+  icon-to-text gap or component-relative breakpoint. Use `%`, `min()`, `max()`, and `clamp()` for
+  proportions and fluid sizing.
+- Use `fr` for flexible CSS Grid tracks, and prefer intrinsic track functions such as `minmax()`
+  over hard-coded column widths when content can vary. Use viewport units only for deliberate
+  viewport-relative behavior, preferably the dynamic or small/large viewport variants when mobile
+  browser chrome affects the layout.
+- Reserve `px` for deliberate fixed details such as borders, hairlines, shadows, or a design-token
+  scale already defined in pixels. Do not use pixels for body-text sizing or as a default layout
+  unit. Match established project conventions when they intentionally differ.
 
 ## Inline Styles
 
