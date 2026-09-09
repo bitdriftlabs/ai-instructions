@@ -34,6 +34,19 @@ For portable Rust conventions, edit `instructions/rust.md`. The sync script upda
 The harness wrapper files such as `SKILL.md`, plugin manifests, and marketplace metadata are
 checked in directly and should stay thin.
 
+For portable CSS conventions, edit `instructions/css.md`; the new-stylesheet reset lives in
+`instructions/css-reset.css`. The sync script updates:
+
+- `.github/instructions/css.instructions.md`
+- `.claude/rules/css.md`
+- `codex/bitdrift-instructions/skills/css/references/css.md`
+- `codex/bitdrift-instructions/skills/css/references/css-reset.css`
+- `opencode/skills/bitdrift-css/references/css.md`
+- `opencode/skills/bitdrift-css/references/css-reset.css`
+
+The reset is a baseline for new stylesheet entrypoints only. Do not apply it wholesale to an
+existing application without intentional compatibility and visual-regression testing.
+
 ## Rust Execution Profiles
 
 `instructions/rust.md` contains portable language conventions only. It deliberately does not
@@ -56,8 +69,9 @@ so only the selected profile is loaded.
 
 ## Codex
 
-The Codex adapter is packaged as a plugin with a checked-in `bitdrift-rust` skill wrapper. The
-skill is intended to be invoked implicitly for Rust work, or explicitly with `$bitdrift-rust`.
+The Codex adapter is packaged as a plugin with checked-in `bitdrift-rust` and `bitdrift-css` skill
+wrappers. The skills are intended to be invoked implicitly for matching work, or explicitly with
+`$bitdrift-rust` and `$bitdrift-css`.
 
 Install the marketplace locally:
 
@@ -116,7 +130,8 @@ ln -s ~/src/ai-instructions/.claude/rules/rust.md ~/.claude/rules/bitdrift-rust.
 ```
 
 Claude Code resolves symlinked rule files and applies the `paths` frontmatter when it works with
-matching Rust and Cargo files.
+matching Rust, Cargo, and CSS files. To use the CSS rule in a repository, copy or symlink
+`.claude/rules/css.md` alongside the Rust rule.
 
 ## OpenCode
 
@@ -129,6 +144,7 @@ For local use across repositories, symlink the skill into OpenCode's global skil
 ```sh
 mkdir -p ~/.config/opencode/skills
 ln -s ~/src/ai-instructions/opencode/skills/bitdrift-rust ~/.config/opencode/skills/bitdrift-rust
+ln -s ~/src/ai-instructions/opencode/skills/bitdrift-css ~/.config/opencode/skills/bitdrift-css
 ```
 
 For a single repository, symlink it into the project:
@@ -136,6 +152,7 @@ For a single repository, symlink it into the project:
 ```sh
 mkdir -p /path/to/repo/.opencode/skills
 ln -s ~/src/ai-instructions/opencode/skills/bitdrift-rust /path/to/repo/.opencode/skills/bitdrift-rust
+ln -s ~/src/ai-instructions/opencode/skills/bitdrift-css /path/to/repo/.opencode/skills/bitdrift-css
 ```
 
 Use repository `AGENTS.md` files for repo-specific overrides and routing. For example:

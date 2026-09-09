@@ -1,0 +1,75 @@
+/*
+ * Bitdrift CSS reset for new stylesheet entrypoints.
+ *
+ * Adapted from Josh W. Comeau's "A Modern CSS Reset":
+ * https://www.joshwcomeau.com/css/custom-css-reset/
+ *
+ * Do not add this reset wholesale to an established application without compatibility and visual
+ * regression testing. Add application-root isolation only when the owning application requires it.
+ */
+
+/* Use a predictable box model, including pseudo-elements. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Own document spacing while preserving the browser's useful dialog centering. */
+*:not(dialog) {
+  margin: 0;
+}
+
+/* Permit keyword-size transitions only for users who have not reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Keep media responsive and remove inline-layout gaps. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Keep controls aligned with the application's typography. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Prevent long words from escaping common text content. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
