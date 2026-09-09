@@ -30,6 +30,15 @@ applyTo: '**/*.css'
 - Use `rem` for font sizing and user-scalable dimensions where appropriate. Reserve fixed units for
   deliberate physical details such as borders, and match local conventions for all other units.
 
+## Inline Styles
+
+- Do not add inline `style` attributes or framework style props for static presentation. Keep
+  styling in the stylesheet so it can reuse tokens, respond to themes and media queries, and remain
+  reviewable with the component's other styles.
+- Use inline custom properties only when runtime data must supply a dynamic value that cannot be
+  represented by an existing class or stylesheet state. Keep the inline value narrow and consume it
+  from a class-based stylesheet rule.
+
 ## Selectors and Cascade
 
 - Name component classes in lowercase kebab-case and choose names that communicate the component or
