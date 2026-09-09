@@ -19,6 +19,9 @@ def markdown_with_trailing_newline(path: str) -> str:
 
 
 rust_core = markdown_with_trailing_newline("instructions/rust.md")
+css_core = markdown_with_trailing_newline("instructions/css.md")
+css_reset = (ROOT / "instructions/css-reset.css").read_text(encoding="utf-8").strip()
+css_reset = f"{css_reset}\n"
 cargo_workspace = markdown_with_trailing_newline("instructions/cargo-workspace.md")
 bazel_monorepo = markdown_with_trailing_newline("instructions/bazel-monorepo.md")
 
@@ -43,8 +46,31 @@ paths:
 {rust_core}""",
 )
 
+write(
+    ".github/instructions/css.instructions.md",
+    f"""---
+name: 'CSS Standards'
+description: 'Coding conventions for CSS files'
+applyTo: '**/*.css'
+---
+{css_core}""",
+)
+
+write(
+    ".claude/rules/css.md",
+    f"""---
+paths:
+  - "**/*.css"
+---
+{css_core}""",
+)
+
 write("codex/bitdrift-instructions/skills/rust/references/rust.md", rust_core)
 write("opencode/skills/bitdrift-rust/references/rust.md", rust_core)
+write("codex/bitdrift-instructions/skills/css/references/css.md", css_core)
+write("opencode/skills/bitdrift-css/references/css.md", css_core)
+write("codex/bitdrift-instructions/skills/css/references/css-reset.css", css_reset)
+write("opencode/skills/bitdrift-css/references/css-reset.css", css_reset)
 
 for adapter_path, profile in (
     (".github/skills/cargo-workspace/references/cargo-workspace.md", cargo_workspace),
