@@ -52,8 +52,13 @@
 
 ## Layout, Responsiveness, and Organization
 
-- Use Flexbox for one-dimensional alignment and CSS Grid for two-dimensional layout. Prefer `gap`
-  for spacing between siblings over margin-based layout hacks.
+- Use Flexbox for one-dimensional alignment along a row or column. Use CSS Grid when a layout needs
+  coordinated rows and columns, explicit placement, or repeated two-dimensional structures such as
+  cards, forms, and data displays. Prefer `gap` for spacing between siblings over margin-based
+  layout hacks.
+- Consider `subgrid` when a nested component must align its tracks with its parent grid, such as a
+  card's header and body aligning with neighboring cards. Use it only when the project's browser
+  support allows it; otherwise preserve the alignment with explicitly shared track definitions.
 - Use intrinsic and fluid sizing (`min()`, `max()`, `clamp()`, `minmax()`, `auto-fit`, and
   `auto-fill`) where they express the layout directly. Choose breakpoints based on content failure,
   not device names.
