@@ -1,6 +1,6 @@
 ---
 name: cargo-workspace
-description: Use when the command-owning checkout declares `Execution profile: cargo-workspace`, or declares no profile and Cargo is the Rust command default.
+description: "Use when the command-owning checkout declares `Execution profile: cargo-workspace`, or declares no profile and Cargo is the Rust command default."
 ---
 
 # Cargo Workspace Execution Profile

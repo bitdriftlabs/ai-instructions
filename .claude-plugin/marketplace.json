@@ -1,0 +1,14 @@
+{
+  "name": "bitdrift-dev",
+  "owner": {
+    "name": "bitdrift"
+  },
+  "description": "Internal bitdrift development plugins: shared coding standards as skills.",
+  "plugins": [
+    {
+      "name": "bitdrift-instructions",
+      "source": "./codex/bitdrift-instructions",
+      "description": "Bitdrift coding standards (Rust, CSS, cargo-workspace, bazel-monorepo) as skills."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: bazel-monorepo
-description: Use when the command-owning checkout root declares `Execution profile: bazel-monorepo` and Rust formatting, build, lint, or test commands are needed.
+description: "Use when the command-owning checkout root declares `Execution profile: bazel-monorepo` and Rust formatting, build, lint, or test commands are needed."
 ---
 
 # Bazel Monorepo Execution Profile
