@@ -1,0 +1,10 @@
+{
+  "name": "bitdrift-instructions",
+  "version": "0.3.1",
+  "description": "Bitdrift coding instructions as skills.",
+  "author": {
+    "name": "bitdrift"
+  },
+  "repository": "https://github.com/bitdriftlabs/ai-instructions",
+  "skills": "./skills/"
+}

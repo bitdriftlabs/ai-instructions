@@ -79,8 +79,16 @@ Install the marketplace locally:
 codex plugin marketplace add ~/src/ai-instructions
 ```
 
-Then restart Codex, open `/plugins`, select the `bitdrift` marketplace, and install
+Then restart Codex, open `/plugins`, select the `bitdrift-dev` marketplace, and install
 `bitdrift-instructions`.
+
+The marketplace was previously named `bitdrift`; that name now belongs to the public bitdrift
+plugins. If you added it under the old name, remove it and add it again:
+
+```sh
+codex plugin marketplace remove bitdrift
+codex plugin marketplace add bitdriftlabs/ai-instructions --ref main
+```
 
 For company-wide installs from GitHub:
 
@@ -113,7 +121,14 @@ instruction.
 
 ## Claude Code
 
-The Claude adapter is a path-scoped rule at `.claude/rules/rust.md`.
+Install the skills as a plugin from this repository's marketplace:
+
+```text
+/plugin marketplace add bitdriftlabs/ai-instructions
+/plugin install bitdrift-instructions@bitdrift-dev
+```
+
+Alternatively, the Claude adapter is a path-scoped rule at `.claude/rules/rust.md`.
 
 For a single repository, copy or symlink it into that repository:
 
