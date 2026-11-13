@@ -76,6 +76,25 @@ execution profile that overrides their command-owning checkout root.
   - Don't include an Errors section if the only errors are generic failures
   - Don't include an Arguments section if the arguments are obvious based on the function signature
 
+## What to Test
+
+A test is worth its build time and upkeep only when it catches a bug a reviewer could plausibly
+miss by reading the code. Write fewer, sharper tests rather than many shallow ones.
+
+- Before writing a test, name the bug it would catch. If you cannot, do not write it.
+- A test for a bug fix or new behavior must fail without the change. A test that passes against the
+  old code does not test the change; strengthen it or drop it.
+- Do not test what cannot plausibly break: behavior the compiler or a derive guarantees (`Default`,
+  `Clone`, `serde` round-trips of derived types), trivial constructors and accessors, constants,
+  or the behavior of third-party crates.
+- Do not assert that a mock was called with exactly the values the code passes it; assert the
+  observable outcome instead.
+- Test through the public behavior of the module, not its private helpers. Cover cases that differ
+  only in input with one table-driven test, and extend an existing test before adding a new one.
+- Do not add a unit test for a path an integration test already covers unless it isolates a failure
+  case that is hard to reach there.
+- Test count is not a goal. Merging or deleting redundant tests is a welcome change.
+
 ## Test File Conventions
 
 1. Test files should be placed adjacent to the implementation file they're testing
