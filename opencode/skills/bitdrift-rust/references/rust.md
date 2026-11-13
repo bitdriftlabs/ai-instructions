@@ -78,26 +78,43 @@ execution profile that overrides their command-owning checkout root.
 
 ## What to Test
 
-A test is worth its build time and upkeep only when it catches a bug a reviewer could plausibly
-miss by reading the code. Write fewer, sharper tests rather than many shallow ones.
+Each test must catch a specific bug. Apply these rules to every test you add or change:
 
-- Before writing a test, name the bug it would catch. If you cannot, do not write it.
-- A test for a bug fix or new behavior must fail without the change. A test that passes against the
-  old code does not test the change; strengthen it or drop it.
-- Do not test what cannot plausibly break: behavior the compiler or a plain derive guarantees
-  (`Default`, `Clone`, `PartialEq`), trivial constructors and accessors, constants, or the behavior
-  of third-party crates.
-- When a serialized format is a contract (wire, storage, config, or another service's input), test
-  it against fixtures or snapshots of the expected format, including `serde` attributes such as
-  `rename`, `skip_serializing`, `default` and `flatten`. A round-trip of your own output does not
-  catch a renamed field, because the serializer and deserializer change together.
-- Do not assert that a mock was called with exactly the values the code passes it; assert the
-  observable outcome instead.
-- Test through the public behavior of the module, not its private helpers. Cover cases that differ
-  only in input with one table-driven test, and extend an existing test before adding a new one.
-- Do not add a unit test for a path an integration test already covers unless it isolates a failure
-  case that is hard to reach there.
-- Test count is not a goal. Merging or deleting redundant tests is a welcome change.
+- Name the bug the test catches before writing it. If you cannot name one, do not write the test.
+- The test must fail when that bug is present: on the code before a fix, or against a plausible
+  wrong version of new code (an off-by-one, a missing branch, a validator that rejects too much). A
+  test that would pass either way tests nothing; strengthen it or drop it. When you add a check that
+  rejects input, keep one test that valid input still passes it.
+- Put each case at the cheapest level that can observe it. Integration tests cover wiring, with one
+  case per call site; never repeat the same inputs at two levels.
+- Do not test what the compiler, a plain derive (`Default`, `Clone`, `PartialEq`), `std` or a
+  third-party crate already guarantees (such as `clap` parsing or `?` propagation), constants, or
+  constructors and accessors that only store or return a field.
+- A mapping a reviewer can verify by reading, such as a short `match` or a field copy, does not
+  need its own unit test. Prove its consequence once, where it is observable.
+- Do not add tests that check removed code is gone: a deleted field absent from output, a removed
+  endpoint returning 404, a dropped config key being ignored. Nothing will re-add it by accident,
+  and the compiler or existing tests catch remaining uses. Check it locally if you need to, but do
+  not commit the test. This does not cover tests that invalid input is rejected, which test
+  behavior. When the absence is itself a requirement (a secret or personal field must never be
+  logged or exported, a revoked permission must stay denied), it is a contract: test it.
+- A serializer and deserializer generated from the same definition, whether `serde` derives or
+  protobuf codegen, cannot catch a renamed field or a changed field number, because both sides
+  change together. When a format is a contract (wire, storage, config, or another service's
+  input), decode a fixture or snapshot of bytes from the other side's current version, covering
+  attributes such as `rename`, `skip_serializing`, `default` and `flatten`. A round trip between
+  independently written directions, such as a parser and a formatter, is valid when fidelity is
+  the requirement.
+- With a mock, assert what crosses the boundary when that is the behavior: a request field sent, a
+  message published, bytes charged, no write made. Do not assert call counts, call order, or
+  arguments the code only passes through.
+- A concurrency, cancellation or shutdown test must assert an effect the wrong ordering would
+  change. Forcing a drop or interleaving and then observing nothing does not test it.
+- Test through the function or type that other code calls, not helpers that only it uses. Cover
+  cases that differ only in input with one table-driven test, and extend an existing test before
+  adding a new one.
+- Fewer tests is fine. When you change code, merge or delete tests in that code that duplicate
+  each other.
 
 ## Test File Conventions
 
