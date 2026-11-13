@@ -89,9 +89,13 @@ miss by reading the code. Write fewer, sharper tests rather than many shallow on
 - Before writing a test, name the bug it would catch. If you cannot, do not write it.
 - A test for a bug fix or new behavior must fail without the change. A test that passes against the
   old code does not test the change; strengthen it or drop it.
-- Do not test what cannot plausibly break: behavior the compiler or a derive guarantees (`Default`,
-  `Clone`, `serde` round-trips of derived types), trivial constructors and accessors, constants,
-  or the behavior of third-party crates.
+- Do not test what cannot plausibly break: behavior the compiler or a plain derive guarantees
+  (`Default`, `Clone`, `PartialEq`), trivial constructors and accessors, constants, or the behavior
+  of third-party crates.
+- When a serialized format is a contract (wire, storage, config, or another service's input), test
+  it against fixtures or snapshots of the expected format, including `serde` attributes such as
+  `rename`, `skip_serializing`, `default` and `flatten`. A round-trip of your own output does not
+  catch a renamed field, because the serializer and deserializer change together.
 - Do not assert that a mock was called with exactly the values the code passes it; assert the
   observable outcome instead.
 - Test through the public behavior of the module, not its private helpers. Cover cases that differ
